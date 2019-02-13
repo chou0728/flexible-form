@@ -1,6 +1,9 @@
 const path = require('path')
 module.exports = {
-  // publicPath: 'flexible-form',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/flexible-form/'
+    : '/',
+
   // 不保存為eslint規範的代碼
   lintOnSave: false,
 
