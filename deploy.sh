@@ -14,10 +14,10 @@ npm run build
 # git add -A
 # git commit -m 'deploy'
 
-git add dist 
+git add dist -f
 git commit -m "Initial dist subtree commit"
 
-# 部署到 https://github.com/chou0728/flexible-form.git 分支為 master
-git push -f https://github.com/chou0728/flexible-form.git master
+# 部署到 https://github.com/chou0728/flexible-form.git 分支為 gh-pages
+git push -f https://github.com/chou0728/flexible-form.git master:gh-pages
 
 cd -
