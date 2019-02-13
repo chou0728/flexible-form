@@ -7,15 +7,17 @@ set -e
 npm run build
 
 # cd 到打包後的dist目錄下 
-cd dist
+# cd dist
 
-# 初始化git 並 add 與 commit
-git init
-git add -A
-git commit -m 'deploy'
+# # 初始化git 並 add 與 commit
+# git init
+# git add -A
+# git commit -m 'deploy'
 
+git add dist 
+git commit -m "Initial dist subtree commit"
 
-# 部署到 https://github.com/chou0728/flexible-form.git 分支 為 gh-pages
-git push -f https://github.com/chou0728/flexible-form.git gh-pages
+# 部署到 https://github.com/chou0728/flexible-form.git 分支為 master
+git push -f https://github.com/chou0728/flexible-form.git master
 
 cd -
