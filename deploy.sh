@@ -15,7 +15,7 @@ git add -A
 git commit -m 'deploy'
 
 
-# 部署到 https://github.com/chou0728/flexible-form.git 分支為 master
+# 部署到 https://github.com/chou0728/flexible-form.git branch 為 master
 git push -f https://github.com/chou0728/flexible-form.git master
 
 cd -
