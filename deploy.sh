@@ -14,11 +14,7 @@ git init
 git add -A
 git commit -m 'deploy'
 
-# git add dist && git commit -m "Initial dist subtree commit"
-# git subtree push --prefix dist origin gh-pages
-
 # 部署到 https://github.com/chou0728/flexible-form.git 分支為 gh-pages
 git push -f https://github.com/chou0728/flexible-form.git master:gh-pages 
-# 用vue cli官方的這個方式行不通，因為github規定github pages不能使用gh-pages(還是我先不要建立分支?)
 
-cd -
+cd -d
