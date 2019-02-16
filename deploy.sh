@@ -11,6 +11,8 @@ cd dist
 
 # # 初始化git 並 add 與 commit
 git init
+git config user.name "chou0728"
+git config user.email "dean34520@gmail.com"
 git add -A
 git commit -m 'deploy'
 
