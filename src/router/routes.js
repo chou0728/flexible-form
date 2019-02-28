@@ -1,18 +1,18 @@
-import Home from '../views/Home.vue'
-
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'editForm',
+    component: () => import('../views/EditTemplate.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/divtable',
+    name: 'divtable',
+    component: () => import('../views/DivTable.vue')
+  },
+  {
+    path: '/gridtable',
+    name: 'gridtable',
+    component: () => import('../views/GridTable.vue')
   }
 ]
 
