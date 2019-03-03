@@ -144,7 +144,7 @@ h1
 .wrapper(@click="removeFocus($event)")
   h1 動態表單
   .table
-    .row.row-normal(@click="rowClick($event)" v-for="(row,index) in rowList" :key="index")
+    .row(@click="rowClick($event)" v-for="(row,index) in rowList" :key="index")
       .column(v-for="(column,index) in row.columnList" :key="index")
         template(v-if=" column.type ==='input' ")
           input.editable-input(

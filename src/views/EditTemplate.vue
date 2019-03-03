@@ -4,6 +4,7 @@
   width 100%
   height 150vh
   background #fff
+  padding 10px 40px 0px 40px
 
 .table-info
   display grid 
@@ -16,39 +17,51 @@
     text-align center
 
 .table-name
+  width 100%
   text-align center
-  padding 10px 40px 0px 40px
+  padding 5px 10px
+  background transparent
+  border 1px solid transparent
+  transition .35s all ease-in-out
 
-  input
+  &:hover
+    background #c7d8e0
+    border 1px solid #0dbbfb
+  
+  &:hover > .table-name__input
+    background #fff
+
+  &:focus-within
+    background #c7d8e0
+    border 1px solid #0dbbfb
+
+  &__input
     width 100%
+    background transparent
     text-align center
-    border #fff 
+    border 1px solid #fff
+    border-radius 2px
     outline none 
     box-shadow none
     resize none
     font-size 20px    
-    
-    &:hover
-      border 1px solid red
-      box-shadow none
+    transition .35s all ease-in-out
 
-    &:focus 
-      border 1px solid red
-      outline none 
-      box-shadow none
+    &:focus
+      background #fff
 
 
 .table-sections
-  padding 10px 40px 20px 40px
 
-  .row__add
+  .add-row-button
     width 100%
-    height 32px
-    line-height 32px
+    height 36px
+    line-height 36px
     border 1px dashed #000
     background #fff
     margin-top 10px
     text-align center 
+    
 
     &:hover
       cursor pointer
@@ -58,94 +71,212 @@
       font-size 18px
       padding-right 5px
 
-  .table-section-one
+  .section-one
     display grid
     -ms-grid-columns 1fr 
     grid-template-columns 1fr 
     margin-top 20px
-    background gray
-    border 1px solid gray
-    grid-gap 1px
-  
+
+    .two-column-row
+      -ms-grid-columns 0.25fr 0.75fr  
+      grid-template-columns 0.25fr 0.75fr 
+
     .row
-      background gray
       display grid
       -ms-grid-columns 1fr 1fr 1fr 1fr
       grid-template-columns 1fr 1fr 1fr 1fr
-      grid-gap 1px
+      border 1px solid gray
+      transition .4s all ease-in-out
+
+      &:nth-child(n+2)
+        margin-top -1px
 
       &:hover 
-        border 1px solid red
+        border-color #0dbbfb
+        cursor pointer
 
-    .row:nth-child(1):hover,.row:nth-child(2):hover,.row:nth-child(3):hover
-      border none
-
-    .is-two-column
-      -ms-grid-columns 0.25fr 0.75fr  
-      grid-template-columns 0.25fr 0.75fr  
+      &:hover + .row
+        border-top 1px solid #0dbbfb
+       
+      &:focus-within
+        border-color #0dbbfb
 
     .column
+      width 100%
+      height 36px
+      line-height 36px
       background #fff
+      border-right 1px solid #000    
       text-align center
+      position relative
+      transition .35s all ease-in-out
+      pointer-events none
 
-  .table-section-one-hover
-    background #fff
-    border 1px solid #fff
+      &:last-child
+        border-right none
+      
+      &:focus-within
+        background #c7d8e0
+
+      .editable-input
+        width calc(100% - 10px)
+        height calc(100% - 10px)
+        position absolute
+        top 50%
+        left 50%
+        transform translate(-50%,-50%)
+        padding 0 10px
+        border 1px solid transparent
+        display block
+        opacity 1
+        transition .35s all ease-in-out
+        background transparent
+        border-radius 2px
+        cursor text
+        outline none
+        text-align center
+
+        &:focus
+          background #fff
+      
+      .readonly-input
+        width 100%
+        height 100%
+        padding 0 10px
+        border 1px solid transparent
+        background transparent
+        display block
+        opacity 1
+        transition .35s all ease-in-out
+        outline none
+        pointer-events none
+        text-align center
 
 
-  .ivu-input
-    border none 
-    outline none 
-    box-shadow none
-    resize none
 
-    &:hover
-      border none
-    &:focus 
-      border none
-      outline none 
-      box-shadow none
-
-  .table-section__body 
+  .section-two 
     display grid
     -ms-grid-columns 1fr 
     grid-template-columns 1fr 
-    margin 20px 0
-    background #fff
-    // border 1px solid #000
-    // border-bottom none
-    grid-gap 1px
+    margin-top 20px
 
     .row
-      position relative
-      background #fff
       display grid
-      -ms-grid-columns 1fr 1fr 1fr 1fr 1fr
-      grid-template-columns 1fr 1fr 1fr 1fr 1fr
-      background #000
-      grid-gap 1px      
-      transition .2s all ease-out
-      border 1px solid #000
-      // border-bottom 0px 
+      -ms-grid-columns 1fr 1fr 1fr 1fr
+      grid-template-columns 1fr 1fr 1fr 1fr
+      border 1px solid gray
+      transition .4s all ease-in-out
 
-      &:first-child
-        border-bottom none
+      &:nth-child(n+2)
+        margin-top -1px
 
-      // &:not(.is-focus)
-      //   border-bottom 1px solid #000
+      &:hover 
+        border-color #0dbbfb
+        cursor pointer
 
-      &:hover
-        transition .2s all ease-in
-        border 1px solid red
+      &:hover + .five-column-row
+        border-top 1px solid #0dbbfb
 
-    .is-focus
-      transition .6s all ease-out
-      margin 25px 0 
-      border 1px solid red
+      &:hover + .one-column-row
+        border-top 1px solid #0dbbfb
+       
+      &:focus-within
+        border-color #0dbbfb
+
+    .column
+      width 100%
+      background #fff
+      border-right 1px solid #000    
+      text-align center
+      position relative
+      transition .35s all ease-in-out
+      pointer-events none
+      display flex
+      justify-content center
+      align-items center
+      padding 5px 0
+
+      &:last-child
+        border-right none
+      
+      &:focus-within
+        background #c7d8e0
+
+      .editable-input 
+        width calc(100% - 20px)
+        height auto
+        padding 5px 10px
+        border 1px solid transparent 
+        opacity 1
+        transition .35s all ease-in-out
+        background transparent
+        border-radius 2px
+        cursor text
+        outline none
+
+        &:focus
+          background #fff
+        
+      .readonly-input
+        width 100%
+        height auto
+        padding 5px 10px
+        border 1px solid transparent
+        background transparent
+        opacity 1
+        transition .35s all ease-in-out
+        outline none
+        pointer-events none
+        text-align center
 
 
-    
-    .row-mask
+      .edit-button
+        width calc(100% - 10px)
+        height auto
+        max-height 34px
+        line-height 34px
+        position absolute
+        top 50%
+        left 50%
+        transform translate(-50%,-50%)
+        background #eff4f6
+        border none 
+        border-radius 2px
+        opacity 0
+        pointer-events none
+        transition all .35s ease-in-out
+        outline none
+      
+      textarea
+        overflow hidden
+        resize none
+
+        &::placeholder
+          text-align center
+      
+      .ivu-select
+        padding 0 4px
+
+      .two-unit-input, .three-unit-input
+        display flex
+        justify-content center
+
+        span 
+          padding 0 5px
+          display inline-block
+          line-height 36px
+        input 
+          width 40%
+          height 36px
+          border 1px solid rgba(0,0,0,0.2)
+          border-radius 2px
+          outline none
+
+      .three-unit-input input
+        width 30%
+
+
+    &__row-mask
       width 100%
       height 100%
       z-index 3
@@ -165,7 +296,7 @@
       background gray
       opacity .3
         
-    .column
+    &__column
       position relative
       background #fff
       
@@ -174,7 +305,7 @@
 
 
 
-    .column-mask
+    &__column-mask
       width 100%
       height 100%
       position absolute
@@ -210,19 +341,68 @@
       transition .3s all ease-in-out
 
 
-    //隨著rowType而做增添
-    .is-five-column
+    //隨著rowType做變化
+    .five-column-row
       -ms-grid-columns 1fr 1fr 1fr 1fr 1fr
       grid-template-columns 1fr 1fr 1fr 1fr 1fr
 
-    .is-title-row
+    .one-column-row
       -ms-grid-columns 1fr 
       grid-template-columns 1fr
+
+    .empty-row
+      -ms-grid-columns 1fr 
+      grid-template-columns 1fr
+      border none
+      margin-top 0px !important
+      margin-bottom 1px !important
+
+
+
+  // === 動態class ===
+
+  //.row
+  .is-focus-row
+    transition .35s all ease-in-out
+    margin 20px 0 !important
+    border 1px solid #0dbbfb
+  
+  .is-focus-row:hover + .row
+    border-top 1px solid #000
+
+  .is-blur-row
+    opacity .3
+  
+  .is-blur-row:hover
+    opacity .75
+
+  //.column
+  .is-focus-column
+    background #fff
+
+  .is-focus-column:hover
+    background #c7d8e0
+
+  //.edit-button
+  .is-focus-column:hover > .edit-button
+    opacity 1
+    border-color #c6e2ff
+    background #fff
+    color #409eff
+    pointer-events auto
+
+  //.editable-input
+  .is-focus-column:hover > .editable-input
+    background #fff
+
+  .is-focus-input
+    background #f8fafb
+
 
 </style>
 
 <template lang="pug">
-  .edit-template-wrapper
+  .edit-template-wrapper(@click="removeFocus($event)")
     TemplateHeader.edit-template-header
       router-link(to="" slot="go-back") 返回範本列表
       ViewButton(slot="save-button" @click="save") 儲存
@@ -233,33 +413,38 @@
         .row-components
           .five-column-component.component-wrapper(
             v-if="rowComponentVisible"
-            @click="changeComponent('five-column')")
+            @click="changeComponent($event, 'five-column')")
             img(src="../assets/images/five_column.png").component-icon
             p.component-name 五欄
           .title-row-component.component-wrapper(
             v-if="rowComponentVisible"
-            @click="changeComponent('title-row')")
+            @click="changeComponent($event, 'title-row')")
             img(src="../assets/images/one_column.png").component-icon
             p.component-name 分類標題列
+          .empty-row-component.component-wrapper(
+            v-if="rowComponentVisible"
+            @click="changeComponent($event, 'empty-row')")
+            img(src="../assets/images/one_column.png").component-icon
+            p.component-name 空白列
         .column-components
           .input-component.component-wrapper(
             v-if="columnComponentVisible"
-            @click="changeComponent('input')")
+            @click="changeComponent($event, 'input')")
             img(src="../assets/images/input.png").component-icon
             p.component-name 文字敘述
           .select-component.component-wrapper(
             v-if="columnComponentVisible"
-            @click="changeComponent('select')")
+            @click="changeComponent($event, 'select')")
             img(src="../assets/images/select.png").component-icon
             p.component-name 下拉選單
           .two-unit-input-component.component-wrapper(
             v-if="columnComponentVisible"
-            @click="changeComponent('two-unit-input')")
+            @click="changeComponent($event, 'two-unit-input')")
             img(src="../assets/images/two_unit_input.png").component-icon
             p.component-name 相乘
           .three-unit-input-component.component-wrapper(
             v-if="columnComponentVisible"
-            @click="changeComponent('three-unit-input')")
+            @click="changeComponent($event, 'three-unit-input')")
             img(src="../assets/images/three_unit_input.png").component-icon
             p.component-name 三乘
 
@@ -270,67 +455,67 @@
           .table-info__item {{initialData.companyName}}
           .table-info__item {{initialData.no.placeholder}}
         .table-name
-          input.table-name__input(type="text" v-model="initialData.name")
+          input.table-name__input(
+            id="initFocus"
+            type="text" 
+            v-model="initialData.name")
         .table-sections
-          .table-section.table-section-one
-            div.row(
+          .section-one
+            .row.section-one-row(
               v-for="(row,index) in initialData.pages[0].section1.rows"
-              :class="{'is-two-column': row.rowType === 'two-column'}")
-              div.column(
+              :class="{'two-column-row': row.rowType === 'two-column'}"
+              @click="rowClick($event, row, index)")
+              .column(
                 v-for="(column,index) in row.columns")
-                ViewInput(
+                input(
                   :key="index"
                   v-model="column.value"
+                  :class="{'readonly-input': column.readonly,'editable-input': !column.readonly}"
                   :readonly="column.readonly"
                   :placeholder="column.placeholder")
-          .row__add(@click="addSectionRow(1)") 新增一列
+          .add-row-button(@click="addSectionRow(1)") 新增一列
 
-          .table-section.table-section__body
-            div.row(
+          .section-two
+            .row.section-two-row(
               v-for="(row,index) in initialData.pages[0].section2.rows"
-              :class="{'is-title-row': row.rowType === 'title-row','is-five-column': row.rowType === 'five-column','is-focus':rowFocusIndex === index}")
-              div.row-mask(
-                v-if="rowMaskVisible"
-                :class="{'row-mask-is-focus':rowFocusIndex === index}"
-                @click="handleRowMaskClick(row,index)"
-                @dblclick="handleRowMaskDblclick(row,index)")
-              div.column(
-                v-for="(column,index) in row.columns")
-                div.column-mask(
-                  v-if="column.changeable"
-                  @mouseover="handleColumnHover(column,index)"
-                  @mouseout="handleColumnHover(column,index)"
-                  @click="handleColumnMaskClick(column,index)"
-                  :class="{'column-mask-is-focus':columnFocusId === column.columnId,'column-mask-is-hover':columnHoverId === column.columnId}")
-                  .column-mask__btn 
-                    span 編輯
-                ViewSelect(
-                  v-if="isSelect === column.columnId || column.columnType === 'select' "
-                  :key="index"
-                  v-model="column.value")
-                ViewInput(
-                  v-else-if="isInput === column.columnId || column.columnType === 'input'"
-                  :key="index"
-                  type="textarea"
-                  v-model="column.value"
-                  :autosize="{ minRows: 1, maxRows: 6 }"
-                  :readonly="column.readonly"
-                  :placeholder="column.placeholder")
-                ViewInput(
-                  v-else
-                  type="textarea"
-                  @input="handleCellInput(column)"
-                  :key="index"
-                  v-model="column.value"
-                  :autosize="{ minRows: 1, maxRows: 6 }"
-                  :readonly="column.readonly"
-                  :placeholder="column.placeholder") 
+              :key="index"
+              :class="{'empty-row': row.rowType === 'empty-row','one-column-row': row.rowType === 'title-row','five-column-row': row.rowType === 'five-column','is-focus-row':focusRowId === row.rowId}"
+              @click="rowClick($event, row, index)")
+              .column(v-for="(column,index) in row.columns" :key="index")
+                template(v-if="column.changeable")
+                  textarea.readonly-input(
+                    v-if="column.columntype === 'input' "
+                    v-model="column.value"
+                    :readonly="column.readonly"
+                    :placeholder="column.placeholder")
+                  ViewSelect.readonly-input(
+                    v-if="column.columntype === 'select' "
+                    v-model="column.value"
+                    :readonly="column.readonly"
+                    :placeholder="column.placeholder")
+                  div.readonly-input.two-unit-input(
+                    v-if="column.columntype === 'two-unit-input' ")
+                    input(readonly)
+                    span X
+                    input(readonly)
+                  div.readonly-input.three-unit-input(
+                    v-if="column.columntype === 'three-unit-input' ")
+                    input(readonly)
+                    span X
+                    input(readonly)
+                    span X
+                    input(readonly)
+                  button.edit-button(
+                    @click="editButtonClick($event, column, index)") 編輯
+                template(v-else)
+                  textarea(
+                    :class="{'readonly-input': column.readonly,'editable-input': !column.readonly}"
+                    v-model="column.value"
+                    :readonly="column.readonly"
+                    :placeholder="column.placeholder")
                   
-          .row__add(@click="addSectionRow(2)") 新增一列
+          .add-row-button(@click="addSectionRow(2)") 新增一列
 
-      
-
-                    
 
 </template>
 
@@ -549,7 +734,7 @@
                         //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
                         value: '', 
                         placeholder:'請輸入檢查情形',
-                        readonly:false,
+                        readonly:true,
                         changeable:true,
                         typeSpec:{ //changeable 為 true 才會有typeSpec
                           optionList:[
@@ -701,11 +886,9 @@
         rowMaskVisible:true,
         columnComponentVisible:false,
         rowComponentVisible:false,
-        columnFocusId:'',
-        columnHoverId:'',
-        rowFocusIndex:'',
+        focusRowId:'',
         isSelect:'',
-        isInput:''
+        isInput:'',
       }
     },
     watch: {},
@@ -713,11 +896,84 @@
     },
     methods: {
       ...mapActions(['']),
-      changeComponent(componentName){
-        console.log('changeComponent')
-        const { rowIndex, columIndex } = this.selectedItem
+      autosize() {
+        $('textarea').on('input',function() {
+          $(this).css('height', 'auto').css('height', `${this.scrollHeight}px`)
+        })
+      },
+      editButtonClick(event, column, index,) {
+        event.stopPropagation()
+        this.selectedItem.columnIndex = index
+        this.selectedItem.columnId = column.columnId
+        this.rowComponentVisible = false
+        this.columnComponentVisible = true
+      },
+      rowClick(event,row,index) {
+        event.stopPropagation()
+        console.log(event)
+        console.log(event.target)
+
+        if(!$(event.target).is('.row')) {
+          this.columnComponentVisible = false
+          this.rowComponentVisible = false
+          return 
+        }
+
+        if($(event.target).is('.row')) {
+          this.columnComponentVisible = false
+          this.rowComponentVisible = true
+        }
+
+        if($(event.target).is('.section-one-row')) {
+          this.rowComponentVisible = false
+          if(index === 0 || index === 1 || index === 2) {
+            return 
+          }
+        }
+
+        if($(event.target).is('.section-two-row')) {
+          if(index === 0) {
+            this.columnComponentVisible = false
+            this.rowComponentVisible = false
+            return 
+          }
+        }
+
+        this.focusRowId = row.rowId
+        this.selectedItem.rowIndex = index
+        this.selectedItem.rowId = row.rowId
+        
+        $('.column').css('pointer-events','none')
+        $('.column').removeClass('is-focus-column')
+        $('.row').removeClass('is-focus-row')
+        $('.row').addClass('is-blur-row')
+        $(event.target).addClass('is-focus-row')
+        $(event.target).removeClass('is-blur-row')
+        $(event.target).find('.column').addClass('is-focus-column')
+        $(event.target).find('.is-focus-column').css('pointer-events','auto')
+
+      },
+      removeFocus(event) {
+        console.log(event.target)
+        event.stopPropagation()
+        $('.row').removeClass('is-focus-row')
+        $('.row').removeClass('is-blur-row')
+        $('.column').removeClass('is-focus-column')
+        $('.column').css('pointer-events','none')
+        this.rowComponentVisible = false
+        this.columnComponentVisible = false
+      },
+      changeComponent(event,componentName){
+        event.stopPropagation()
+        const { rowIndex, columnIndex } = this.selectedItem
         switch (componentName) {
+          case 'empty-row':
+            this.initialData.pages[0].section2.rows[rowIndex].columns = this.deepCopy(this.secondSectionDefaultRow.columns)
+            this.initialData.pages[0].section2.rows[rowIndex].columns.splice(0,4)
+            this.initialData.pages[0].section2.rows[rowIndex].rowType = componentName
+            break;
           case 'title-row':
+            this.initialData.pages[0].section2.rows[rowIndex].columns = this.deepCopy(this.secondSectionDefaultRow.columns)
             this.initialData.pages[0].section2.rows[rowIndex].columns.splice(0,4)
             this.initialData.pages[0].section2.rows[rowIndex].rowType = componentName
             break;
@@ -725,58 +981,15 @@
             this.initialData.pages[0].section2.rows[rowIndex].columns = this.deepCopy(this.secondSectionDefaultRow.columns)
             this.initialData.pages[0].section2.rows[rowIndex].rowType = componentName
             break;
-          case 'input':
-            this.isSelect = ''
-            this.isInput = this.columnFocusId
-            this.initialData.pages[0].section2.rows[rowIndex].columns[columIndex].columntype = componentName
-            break;
-          case 'select':
-            this.isInput = ''
-            this.isSelect = this.columnFocusId
-            this.initialData.pages[0].section2.rows[rowIndex].columns[columIndex].columntype = componentName
+          default:
+            this.initialData.pages[0].section2.rows[rowIndex].columns[columnIndex].columntype = componentName
             break;
         
         }
 
       },
       save(){
-        alert('test')
-      },
-      handleColumnHover(column,index) {
-        if(this.columnHoverId === '') {
-          this.columnHoverId = column.columnId
-          return
-        }
-        this.columnHoverId = ''
         
-      },
-      handleColumnMaskClick(colum,index) {
-        this.selectedItem.columIndex = index
-        this.selectedItem.columId = colum.columnId
-        this.columnFocusId = colum.columnId
-        this.rowComponentVisible = false
-        this.columnComponentVisible = true
-      },
-      handleRowMaskClick(row,index){
-        if(index === 0) {
-          return 
-        }
-        this.rowFocusIndex = index
-        this.rowComponentVisible = true
-        this.columnComponentVisible = false
-        this.selectedItem.rowIndex = index
-        this.selectedItem.rowId = row.rowId
-        console.log('handleRowMaskClick')
-        $('.table-section__body .row:not(.is-focus)').css('border-bottom','1px solid #000')
-      },
-      handleRowMaskDblclick(row,index){
-        if(index === 0) {
-          return 
-        }
-        this.rowMaskVisible = false
-        this.rowComponentVisible = false
-        this.columnComponentVisible = false
-        console.log('handleRowMaskDblclick')
       },
       addSectionRow(section){
         if(section === 1) {
@@ -793,34 +1006,23 @@
         }
         console.log(section)
       },
-      handleCellInput(column) {
-        console.log(column)
-      },
-      handleCellClick(column,index){
-
-      },
-      changeRowType(row,index) {
-        console.log(row)
-        console.log(index)
-        console.log(this.initialData.pages[0].section2.rows[index].rowType)
-      },
-      initTableData(){
-
+      init(){
+        //將第一個input預設focus
+        $('#initFocus').focus()
+        //將所有textarea預設autosize
+        this.autosize()
+        //創建id
         this.initialData.pages[0].section1.rows.forEach( (row,index) => {
           row.rowId = this.createUuid()
           row.columns.forEach( (column,index) => {
             column.columnId = this.createUuid()
           })
         })
-
-        console.log(this.initialData)
-        
-        $('.table-name__input').focus()
       }
     },
     created() {},
     mounted() {
-      this.initTableData()
+      this.init()
       // console.log(JSON.stringify(this.initialData))
     },
     destroyed() {},

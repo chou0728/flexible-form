@@ -44,6 +44,10 @@
   .component-icon
     width 100%
     margin-bottom 10px
+    pointer-events none
+
+  .component-name
+    pointer-events none
 
 </style>
 
