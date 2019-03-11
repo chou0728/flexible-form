@@ -2,9 +2,27 @@
 
 .table
   width 100%
-  height 150vh
+  min-height 100vh
   background #fff
-  padding 10px 40px 0px 40px
+  padding 10px 40px 20px 40px
+
+  .pagebreak  //TODO:刪除
+    width 100%
+    height 2px
+    background #f00
+    position relative
+    left 0
+    top 110vh
+    z-index 3
+    page-break-before always
+
+//A4尺寸
+@media print
+  .table
+    width 21cm
+    height 29.7cm
+    margin 30mm 45mm 30mm 45mm
+
 
 .table-info
   display grid 
@@ -87,6 +105,7 @@
       grid-template-columns 1fr 1fr 1fr 1fr
       border 1px solid gray
       transition .4s all ease-in-out
+      page-break-inside avoid
 
       &:nth-child(n+2)
         margin-top -1px
@@ -166,6 +185,7 @@
       grid-template-columns 1fr 1fr 1fr 1fr
       border 1px solid gray
       transition .4s all ease-in-out
+      page-break-inside avoid
 
       &:nth-child(n+2)
         margin-top -1px
@@ -399,6 +419,9 @@
     background #f8fafb
 
 
+
+
+
 </style>
 
 <template lang="pug">
@@ -406,7 +429,7 @@
     TemplateHeader.edit-template-header
       router-link(to="" slot="go-back") 返回範本列表
       ViewButton(slot="save-button" @click="save") 儲存
-      ViewButton(slot="deploy-button") 發佈
+      ViewButton(slot="deploy-button" @click="printTable") 列印
     TemplateBody.edit-template-body
       h3.side-title(slot="side-title") 列樣式
       .side-content(slot="side-content")
@@ -449,7 +472,7 @@
             p.component-name 三乘
 
 
-      .table(slot="main-content")
+      .table#printArea(slot="main-content")
         .table-info
           .table-info__item 版次 {{initialData.templateLayoutId}}
           .table-info__item {{initialData.companyName}}
@@ -473,8 +496,8 @@
                   :class="{'readonly-input': column.readonly,'editable-input': !column.readonly}"
                   :readonly="column.readonly"
                   :placeholder="column.placeholder")
+            
           .add-row-button(@click="addSectionRow(1)") 新增一列
-
           .section-two
             .row.section-two-row(
               v-for="(row,index) in initialData.pages[0].section2.rows"
@@ -513,8 +536,10 @@
                     v-model="column.value"
                     :readonly="column.readonly"
                     :placeholder="column.placeholder")
+            //- .pagebreak
                   
           .add-row-button(@click="addSectionRow(2)") 新增一列
+          
 
 
 </template>
@@ -765,6 +790,966 @@
                         changeable:false
                       },
                     ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
+                  },
+                  {
+                    rowId:'s-2-r-1',
+                    rowType: 'five-column',
+                    rowIndex:1,
+                    columsAmount:5,
+                    isFixed:false,
+                    columns:[
+                      {
+                        columnId:'s-1-r-1-c-0',
+                        columnIndex:0,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查項目',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-1',
+                        columnIndex:1,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'編輯檢查標準',
+                        readonly:false,
+                        changeable:false
+                      },
+                      {
+                        columnId:'s-1-r-1-c-2',
+                        columnIndex:2,
+                        columntype: 'input', //預設是input
+                        //columntype='input' value='', columntype='select' value={ label:'',value:''}, columntype='doubleInput' value=['',''] , columntype='tripleInput' value=['','','']
+                        value: '', 
+                        placeholder:'請輸入檢查情形',
+                        readonly:true,
+                        changeable:true,
+                        typeSpec:{ //changeable 為 true 才會有typeSpec
+                          optionList:[
+                            {
+                              label:'',
+                              value:''
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        columnId:'s-1-r-1-c-3',
+                        columnIndex:3,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false,
+                        
+                      },
+                      {
+                        columnId:'s-1-r-1-c-4',
+                        columnIndex:4,
+                        columntype: 'input',
+                        value: '',
+                        placeholder:'',
+                        readonly:true,
+                        changeable:false
+                      },
+                    ]
                   }
                 ],
               },
@@ -896,6 +1881,14 @@
     },
     methods: {
       ...mapActions(['']),
+      printTable(){
+        const printAreaContent = $('#printArea').html()
+        const originalBodyContent = $('body').html()
+        $('body').html(printAreaContent)
+        window.print()
+        $('body').html(originalBodyContent)
+        return
+      },
       autosize() {
         $('textarea').on('input',function() {
           $(this).css('height', 'auto').css('height', `${this.scrollHeight}px`)

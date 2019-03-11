@@ -13,6 +13,11 @@ const routes = [
     path: '/gridtable',
     name: 'gridtable',
     component: () => import('../views/GridTable.vue')
+  },
+  {
+    path: '/printtable',
+    name: 'printtable',
+    component: () => import('../views/PrintTemplate.vue')
   }
 ]
 
