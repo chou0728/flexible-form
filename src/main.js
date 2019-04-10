@@ -5,6 +5,7 @@ import store from './store'
 import '../src/mixins'
 import './components'
 import './plugins/iview.js'
+import './plugins/print.js'
 
 Vue.config.productionTip = false
 

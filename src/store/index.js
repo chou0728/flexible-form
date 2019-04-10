@@ -7,6 +7,7 @@ import getters from './getters'
 
 // 引入modules模板
 import template from './modules/template'
+import cssText from './modules/cssText'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   actions,
   getters,
   modules: {
-    template
+    template,
+    cssText
   }
 })
