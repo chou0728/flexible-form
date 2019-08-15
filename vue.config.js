@@ -4,6 +4,8 @@ module.exports = {
     ? '/flexible-form/'
     : '/',
 
+  transpileDependencies: ['webpack-dev-server/client'],
+
   // 不保存為eslint規範的代碼
   lintOnSave: false,
 
@@ -30,6 +32,8 @@ module.exports = {
       .options({
         hotReload: true
       })
+
+    config.entry.app = ['babel-polyfill', './src/main.js']
   },
 
   // css預處理轉換

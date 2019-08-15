@@ -1,15 +1,22 @@
 /* eslint-disable */
+const plugins = [];
+if (['production', 'prod'].includes(process.env.NODE_ENV)) {
+  plugins.push("transform-remove-console")
+}
+
+
 module.exports = {
-  "presets": [
-    "@vue/app"
-  ],
-  "plugins": [
+  presets: [
     [
-      "import",
+      "@vue/app",
       {
-        "libraryName": "iview",
-        "libraryDirectory": "src/components"
+        "useBuiltIns": "entry",
+        polyfills: [
+          'es6.promise',
+          'es6.symbol'
+        ]
       }
     ]
-  ]
-}
+  ],
+  plugins: plugins
+};
